@@ -3,9 +3,9 @@ from pythonosc.udp_client import SimpleUDPClient
 
 # Dummy badge data
 badge_data = {
-    "launch_show": True,
-    "opacity_value": 0.8,
-    "clip_name": "IntroClip"
+    "player_connect": True,
+    "score": 140,
+    "player_name": "David"
 }
 
 def load_config(path):
@@ -30,7 +30,7 @@ def send_osc_messages(config, badge_data):
         path = mapping['path']
 
         if msg_type == 'launch':
-            client.send_message(path, 1 if value else 0)
+            client.send_message(path, True if value else False)
         elif msg_type == 'number':
             client.send_message(path, float(value))
         elif msg_type == 'text':

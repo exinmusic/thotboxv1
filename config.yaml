@@ -4,14 +4,14 @@ osc:
 
 mappings:
   - path: "/composition/layers/4/clips/6/connect"
-    field: "launch_show"
+    field: "player_connect"
     type: "launch"
 
-  - path: "/composition/layers/1/clips/2/video/opacity"
-    field: "opacity_value"
+  - path: "/total_score"
+    field: "score"
     type: "number"
 
-  - path: "/composition/layers/3/clips/5/name"
-    field: "clip_name"
+  - path: "/composition/layers/4/clips/10/video/source/blocktextgenerator/text/params/lines"
+    field: "player_name"
     type: "text"
 
