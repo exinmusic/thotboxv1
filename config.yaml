@@ -22,3 +22,6 @@ mappings:
     field: "player_name"
     type: "text"
 
+  - path: "/composition/layers/1/clips/2/connect"
+    field: "something_else"
+    type: "launch"
