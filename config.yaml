@@ -3,7 +3,7 @@ osc:
   port: 1337
 
 mappings:
-  - path: "/composition/layers/4/clips/6/connect"
+  - path: "/composition/layers/1/clips/1/connect"
     field: "player_connect"
     type: "launch"
 
@@ -11,7 +11,7 @@ mappings:
     field: "score"
     type: "number"
 
-  - path: "/composition/layers/4/clips/10/video/source/blocktextgenerator/text/params/lines"
+  - path: "/composition/layers/2/clips/1/video/source/blocktextgenerator/text/params/lines"
     field: "player_name"
     type: "text"
 

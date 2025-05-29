@@ -5,7 +5,7 @@ from pythonosc.udp_client import SimpleUDPClient
 badge_data = {
     "player_connect": True,
     "score": 140,
-    "player_name": "David"
+    "player_name": "ZEBBLER"
 }
 
 def load_config(path):
