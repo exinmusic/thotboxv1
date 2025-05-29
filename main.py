@@ -22,10 +22,20 @@ def send_osc_messages(config, badge_data):
     for mapping in config.get('mappings', []):
         field = mapping['field']
         if field not in badge_data:
-            print(f"[WARN] Field '{field}' missing from badge data.")
-            continue
-
-        value = badge_data[field]
+            print(f"[WARN] Field '{field}' missing from badge data, using default value.")
+            # Default to 0 for numbers, False for booleans, and empty string for text
+            msg_type = mapping['type']
+            if msg_type == 'launch':
+                value = False
+            elif msg_type == 'number':
+                value = 0
+            elif msg_type == 'text':
+                value = ""
+            else:
+                print(f"[ERROR] Unknown type '{msg_type}' for field '{field}'.")
+                continue
+        else:
+            value = badge_data[field]
         msg_type = mapping['type']
         path = mapping['path']
 
