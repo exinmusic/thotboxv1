@@ -1,16 +1,31 @@
 import yaml
+import json
 from pythonosc.udp_client import SimpleUDPClient
-
-# Dummy badge data
-badge_data = {
-    "player_connect": True,
-    "score": 140,
-    "player_name": "ZEBBLER"
-}
+import pymemcache.client.base
 
 def load_config(path):
     with open(path, 'r') as f:
         return yaml.safe_load(f)
+
+def get_badge_data(config):
+    memcached_config = config.get('memcached', {})
+    host = memcached_config.get('host', '127.0.0.1')
+    port = memcached_config.get('port', 11211)
+    key = memcached_config.get('key', 'badge_data')
+    
+    print(f"Connecting to memcached at {host}:{port} with key {key}")
+    client = pymemcache.client.base.Client((host, port))
+    
+    try:
+        data = client.get(key)
+        if data:
+            return json.loads(data.decode('utf-8'))
+        else:
+            print(f"[ERROR] No data found in memcached with key '{key}'")
+            return {}
+    except Exception as e:
+        print(f"[ERROR] Failed to get data from memcached: {e}")
+        return {}
 
 def send_osc_messages(config, badge_data):
     osc_config = config.get('osc', {})
@@ -50,5 +65,6 @@ def send_osc_messages(config, badge_data):
 
 if __name__ == "__main__":
     config = load_config("config.yaml")
+    badge_data = get_badge_data(config)
     send_osc_messages(config, badge_data)
 
