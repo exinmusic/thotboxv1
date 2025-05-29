@@ -7,6 +7,8 @@ memcached:
   port: 11211
   key: "badge_data"
 
+polling_interval: 1  # Time in seconds between checks
+
 mappings:
   - path: "/composition/layers/1/clips/1/connect"
     field: "player_connect"

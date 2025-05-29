@@ -1,5 +1,6 @@
 import yaml
 import json
+import time
 from pythonosc.udp_client import SimpleUDPClient
 import pymemcache.client.base
 
@@ -65,6 +66,26 @@ def send_osc_messages(config, badge_data):
 
 if __name__ == "__main__":
     config = load_config("config.yaml")
-    badge_data = get_badge_data(config)
-    send_osc_messages(config, badge_data)
+    previous_badge_data = {}
+    
+    # Get polling interval from config, default to 1 second
+    polling_interval = config.get('polling_interval', 1)
+    
+    print(f"Starting badge data polling loop with interval of {polling_interval} seconds")
+    
+    try:
+        while True:
+            badge_data = get_badge_data(config)
+            
+            # Only send OSC messages if the data has changed
+            if badge_data != previous_badge_data:
+                print("Badge data changed, sending OSC updates")
+                send_osc_messages(config, badge_data)
+                previous_badge_data = badge_data.copy()
+            else:
+                print("No change in badge data")
+                
+            time.sleep(polling_interval)
+    except KeyboardInterrupt:
+        print("\nExiting...")
 
